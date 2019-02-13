@@ -1,4 +1,4 @@
-var getUser = (id,callback) => {
+var getUser = (id, callback) => {
     var user = {
         id: id,
         name: 'James'
