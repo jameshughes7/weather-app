@@ -12,3 +12,6 @@ var getUser = (id, callback) => {
 getUser(21, (user) => {
     console.log(user);
 })
+
+let encodedAddress = encodeURIComponent('Flat 1 125 Trinity Road Tooting SW177SQ UK');
+console.log(encodedAddress);

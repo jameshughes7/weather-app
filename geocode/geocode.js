@@ -1,6 +1,6 @@
 const request = require('request');
 
-const geocodeAddress = (address) => {
+let geocodeAddress = (address, callback) => {
     let encodedAddress = encodeURIComponent(address); 
 
     request({
@@ -8,13 +8,16 @@ const geocodeAddress = (address) => {
         json: true
     } , (error, response, body) => {
         if (error) {
-            console.log('Unable to connect to MapQuest Servers');
+            callback('Unable to connect to MapQuest Servers');
         } else if (body.results[0].locations[0].geoQualityCode === 'A1XAX') {
-            console.log('Unable to find that address');
+            callback('Unable to find that address');
         } else {
-            console.log(`Address: ${body.results[0].providedLocation.location} ${body.results[0].locations[0].adminArea3}`);
-            console.log(`Latitude: ${body.results[0].locations[0].latLng.lat}`);
-            console.log(`Longitude: ${body.results[0].locations[0].latLng.lng}`);
+            console.log(body.results[0]);
+            callback(undefined, {
+                address: body.results[0].providedLocation.location,
+                latitude: body.results[0].locations[0].latLng.lat,
+                longitude: body.results[0].locations[0].latLng.lng
+            });
         }
     });
 };
