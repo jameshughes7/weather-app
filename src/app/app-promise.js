@@ -10,12 +10,13 @@ const argv = yargs
             string: true
         }
     })
+    .default('a', 'Flat 1 125 Trinity Road London SW177SQ')
     .help()
     .alias('help', 'h')
     .argv;
 
-    let encodedAddress = encodeURIComponent(argv.address); 
-    let geoCodeUrl = `http://www.mapquestapi.com/geocoding/v1/address?key=gUOl7687qTZWzReEfmuKDtmnC7v3ixtJ&location=${encodedAddress}`;
+    const encodedAddress = encodeURIComponent(argv.address); 
+    const geoCodeUrl = `http://www.mapquestapi.com/geocoding/v1/address?key=gUOl7687qTZWzReEfmuKDtmnC7v3ixtJ&location=${encodedAddress}`;
     // Axios allows you to chain calls together instead of nesting!
     // Axios understands json by default
     // Axios returns a promise
@@ -33,7 +34,7 @@ const argv = yargs
     }).then((response) => {
         let temperature = response.data.currently.temperature;
         let apparentTemperature = response.data.currently.apparentTemperature;
-        console.log(`It's currently ${temperature}. It feels like ${apparentTemperature}.`);
+        console.log(`It's currently ${temperature}\xB0C. It feels like ${apparentTemperature}\xB0C.`);
     }).catch((error) => {
         if (error.code === 'ENOTFOUND') {
             console.log('Unable to connnect to the API servers');
@@ -41,10 +42,3 @@ const argv = yargs
             console.log(error.message);
         }
     })
-
-    // TODO default location so that you wouldn't have to give an address argument
-
-
-
-
-
